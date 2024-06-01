@@ -6,7 +6,7 @@ func BlocksToJSON(blocks []Block) (string, error) {
 	blocksMap := []blockJsonObject{}
 
 	for _, block := range blocks {
-		blocksMap = append(blocksMap, block.toJsonObject())
+		blocksMap = append(blocksMap, block.ToJsonObject())
 	}
 
 	blocksJson, err := json.Marshal(blocksMap)

@@ -116,7 +116,7 @@ func (b *Block) ToMap() map[string]interface{} {
 }
 
 func (b *Block) ToJson() (string, error) {
-	jsonObject := b.toJsonObject()
+	jsonObject := b.ToJsonObject()
 
 	json, err := json.Marshal(jsonObject)
 
@@ -128,7 +128,7 @@ func (b *Block) ToJson() (string, error) {
 }
 
 func (b *Block) ToJsonPretty() (string, error) {
-	jsonObject := b.toJsonObject()
+	jsonObject := b.ToJsonObject()
 
 	json, err := json.MarshalIndent(jsonObject, "", "  ")
 
@@ -139,7 +139,7 @@ func (b *Block) ToJsonPretty() (string, error) {
 	return string(json), nil
 }
 
-func (b *Block) toJsonObject() blockJsonObject {
+func (b *Block) ToJsonObject() blockJsonObject {
 	parameters := b.Parameters()
 	if parameters == nil || len(parameters) < 1 {
 		parameters = make(map[string]string)
@@ -149,7 +149,7 @@ func (b *Block) toJsonObject() blockJsonObject {
 
 	for _, child := range b.Children() {
 		childBlock := child.(*Block)
-		childrenJsonObject = append(childrenJsonObject, childBlock.toJsonObject())
+		childrenJsonObject = append(childrenJsonObject, childBlock.ToJsonObject())
 	}
 
 	return blockJsonObject{
