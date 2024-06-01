@@ -27,5 +27,6 @@ type BlockInterface interface {
 	// Serialization
 	ToMap() map[string]interface{}
 	ToJson() (string, error)
+	ToJsonObject() blockJsonObject
 	ToJsonPretty() (string, error)
 }
