@@ -30,6 +30,14 @@ func (b *Block) AddChild(child BlockInterface) BlockInterface {
 	return b
 }
 
+func (b *Block) AddChildren(children []BlockInterface) BlockInterface {
+	if b.children == nil {
+		b.children = []BlockInterface{}
+	}
+	b.children = append(b.children, children...)
+	return b
+}
+
 func (b *Block) Children() []BlockInterface {
 	return b.children
 }

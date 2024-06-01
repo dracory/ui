@@ -8,6 +8,8 @@ type BlockInterface interface {
 	// Children
 	Children() []BlockInterface
 	SetChildren(children []BlockInterface) BlockInterface
+	AddChild(child BlockInterface) BlockInterface
+	AddChildren(children []BlockInterface) BlockInterface
 
 	// ID
 	ID() string
