@@ -2,7 +2,7 @@ package ui
 
 import "encoding/json"
 
-func BlocksFromJson(blocksJson string) ([]Block, error) {
+func BlocksFromJson(blocksJson string) ([]BlockInterface, error) {
 	blocksMap := []map[string]any{}
 
 	err := json.Unmarshal([]byte(blocksJson), &blocksMap)
@@ -11,7 +11,7 @@ func BlocksFromJson(blocksJson string) ([]Block, error) {
 		return nil, err
 	}
 
-	blocks := []Block{}
+	blocks := []BlockInterface{}
 
 	for _, blockMap := range blocksMap {
 		block, err := mapStringAnyToBlock(blockMap)
@@ -20,7 +20,7 @@ func BlocksFromJson(blocksJson string) ([]Block, error) {
 			return nil, err
 		}
 
-		blocks = append(blocks, *block)
+		blocks = append(blocks, block)
 	}
 
 	return blocks, nil
