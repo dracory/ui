@@ -42,20 +42,20 @@ func TestNewFromMap(t *testing.T) {
 				blockType:  "block1",
 				content:    "",
 				parameters: map[string]string{"key": "value"},
-				children: []*Block{
-					{
+				children: []BlockInterface{
+					&Block{
 						id:         "2",
 						blockType:  "block2",
 						content:    "",
 						parameters: map[string]string{"key2": "value2"},
-						children:   []*Block{},
+						children:   []BlockInterface{},
 					},
-					{
+					&Block{
 						id:         "3",
 						blockType:  "block3",
 						content:    "",
 						parameters: map[string]string{"key3": "value3"},
-						children:   []*Block{},
+						children:   []BlockInterface{},
 					},
 				},
 			},

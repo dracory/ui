@@ -6,6 +6,8 @@ import (
 	"github.com/gouniverse/uid"
 )
 
+var _ BlockInterface = (*Block)(nil) // verify it extends the interface
+
 func NewBlock() *Block {
 	block := &Block{}
 	block.SetID(uid.HumanUid())
@@ -16,23 +18,23 @@ type Block struct {
 	id         string
 	blockType  string
 	content    string
-	children   []*Block
+	children   []BlockInterface
 	parameters map[string]string
 }
 
-func (b *Block) AddChild(child *Block) *Block {
+func (b *Block) AddChild(child BlockInterface) BlockInterface {
 	if b.children == nil {
-		b.children = []*Block{}
+		b.children = []BlockInterface{}
 	}
 	b.children = append(b.children, child)
 	return b
 }
 
-func (b *Block) Children() []*Block {
+func (b *Block) Children() []BlockInterface {
 	return b.children
 }
 
-func (b *Block) SetChildren(children []*Block) *Block {
+func (b *Block) SetChildren(children []BlockInterface) BlockInterface {
 	b.children = children
 	return b
 }
@@ -41,7 +43,7 @@ func (b *Block) Content() string {
 	return b.content
 }
 
-func (b *Block) SetContent(content string) *Block {
+func (b *Block) SetContent(content string) BlockInterface {
 	b.content = content
 	return b
 }
@@ -59,7 +61,7 @@ func (b *Block) Parameters() map[string]string {
 	return b.parameters
 }
 
-func (b *Block) SetParameters(parameters map[string]string) *Block {
+func (b *Block) SetParameters(parameters map[string]string) BlockInterface {
 	b.parameters = parameters
 	return b
 }
@@ -72,7 +74,7 @@ func (b *Block) Parameter(key string) string {
 	return ""
 }
 
-func (b *Block) SetParameter(key string, value string) *Block {
+func (b *Block) SetParameter(key string, value string) BlockInterface {
 	if b.parameters == nil {
 		b.parameters = map[string]string{}
 	}
@@ -84,7 +86,7 @@ func (b *Block) Type() string {
 	return b.blockType
 }
 
-func (b *Block) SetType(blockType string) *Block {
+func (b *Block) SetType(blockType string) BlockInterface {
 	b.blockType = blockType
 	return b
 }
@@ -138,7 +140,8 @@ func (b *Block) toJsonObject() blockJsonObject {
 	childrenJsonObject := make([]blockJsonObject, 0)
 
 	for _, child := range b.Children() {
-		childrenJsonObject = append(childrenJsonObject, child.toJsonObject())
+		childBlock := child.(*Block)
+		childrenJsonObject = append(childrenJsonObject, childBlock.toJsonObject())
 	}
 
 	return blockJsonObject{

@@ -27,7 +27,7 @@ func NewFromMap(m map[string]interface{}) *Block {
 		}
 	}
 
-	children := []*Block{}
+	children := []BlockInterface{}
 
 	if childrenAny, ok := m["children"]; ok {
 		childrenMap := childrenAny.([]map[string]interface{})
