@@ -4,5 +4,5 @@ type HtmlBlockInterface interface {
 	BlockInterface
 
 	// Serialization
-	ToHtml() string
+	ToHTML() string
 }
