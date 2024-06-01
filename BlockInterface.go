@@ -19,6 +19,7 @@ type BlockInterface interface {
 	Parameters() map[string]string
 	Parameter(key string) string
 	SetParameter(key string, value string) BlockInterface
+	SetParameters(map[string]string) BlockInterface
 
 	// Type
 	Type() string
