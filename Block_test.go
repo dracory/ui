@@ -120,3 +120,21 @@ func TestBlock_ToJson(t *testing.T) {
 		})
 	}
 }
+
+func TestBlock_BlockInterfaceToBlock(t *testing.T) {
+	type test struct {
+		Block
+	}
+
+	testF := func(block BlockInterface) string {
+		blockTest := &test{}
+		blockTest.Block = *(block.(*Block))
+		return blockTest.Type()
+	}
+
+	b := NewBlock().SetType("TEST")
+
+	if testF(b) != "TEST" {
+		t.Error("Type must be TEST, found", testF(b))
+	}
+}

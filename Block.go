@@ -60,7 +60,7 @@ func (b *Block) ID() string {
 	return b.id
 }
 
-func (b *Block) SetID(id string) *Block {
+func (b *Block) SetID(id string) BlockInterface {
 	b.id = id
 	return b
 }

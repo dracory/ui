@@ -13,7 +13,7 @@ type BlockInterface interface {
 
 	// ID
 	ID() string
-	SetID(id string) *Block
+	SetID(id string) BlockInterface
 
 	// Parameters
 	Parameters() map[string]string
