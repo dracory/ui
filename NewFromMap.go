@@ -1,6 +1,6 @@
 package ui
 
-func NewFromMap(m map[string]interface{}) *Block {
+func NewFromMap(m map[string]interface{}) BlockInterface {
 	id := ""
 
 	if idMap, ok := m["id"].(string); ok {

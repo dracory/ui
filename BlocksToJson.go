@@ -2,7 +2,7 @@ package ui
 
 import "encoding/json"
 
-func BlocksToJSON(blocks []BlockInterface) (string, error) {
+func BlocksToJson(blocks []BlockInterface) (string, error) {
 	blocksMap := []blockJsonObject{}
 
 	for _, block := range blocks {

@@ -26,7 +26,7 @@ func TestBlock_ToMap(t *testing.T) {
 
 	tests := []struct {
 		name string
-		b    *Block
+		b    BlockInterface
 		want map[string]interface{}
 	}{
 		{
@@ -90,7 +90,7 @@ func TestBlock_ToJson(t *testing.T) {
 
 	tests := []struct {
 		name    string
-		b       *Block
+		b       BlockInterface
 		want    string
 		wantErr bool
 	}{

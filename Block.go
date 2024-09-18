@@ -8,7 +8,7 @@ import (
 
 var _ BlockInterface = (*Block)(nil) // verify it extends the interface
 
-func NewBlock() *Block {
+func NewBlock() BlockInterface {
 	block := &Block{}
 	block.SetID(uid.HumanUid())
 	return block
