@@ -10,6 +10,10 @@ This project is licensed under the GNU General Public License version 3 (GPL-3.0
 
 For commercial use, please use my [contact page](https://lesichkov.co.uk/contact) to obtain a commercial license.
 
+## Introduction
+
+This package allows to build user interfaces based on blocks.
+
 ## Installation
 ```
 go get -u github.com/gouniverse/ui
