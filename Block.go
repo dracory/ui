@@ -15,9 +15,9 @@ func NewBlock() BlockInterface {
 }
 
 type Block struct {
-	id         string
-	blockType  string
-	content    string
+	id        string
+	blockType string
+	// content    string
 	children   []BlockInterface
 	parameters map[string]string
 }
@@ -47,14 +47,14 @@ func (b *Block) SetChildren(children []BlockInterface) BlockInterface {
 	return b
 }
 
-func (b *Block) Content() string {
-	return b.content
-}
+// func (b *Block) Content() string {
+// 	return b.content
+// }
 
-func (b *Block) SetContent(content string) BlockInterface {
-	b.content = content
-	return b
-}
+// func (b *Block) SetContent(content string) BlockInterface {
+// 	b.content = content
+// 	return b
+// }
 
 func (b *Block) ID() string {
 	return b.id
@@ -107,9 +107,9 @@ func (b *Block) ToMap() map[string]interface{} {
 	}
 
 	return map[string]interface{}{
-		"id":         b.ID(),
-		"type":       b.Type(),
-		"content":    b.Content(),
+		"id":   b.ID(),
+		"type": b.Type(),
+		// "content":    b.Content(),
 		"parameters": b.Parameters(),
 		"children":   childrenMap,
 	}
@@ -153,9 +153,9 @@ func (b *Block) ToJsonObject() blockJsonObject {
 	}
 
 	return blockJsonObject{
-		ID:         b.ID(),
-		Type:       b.Type(),
-		Content:    b.Content(),
+		ID:   b.ID(),
+		Type: b.Type(),
+		// Content:    b.Content(),
 		Parameters: parameters,
 		Children:   childrenJsonObject,
 	}

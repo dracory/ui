@@ -13,11 +13,11 @@ func NewFromMap(m map[string]interface{}) BlockInterface {
 		blockType = blockTypeMap
 	}
 
-	content := ""
+	// content := ""
 
-	if contentMap, ok := m["content"].(string); ok {
-		content = contentMap
-	}
+	// if contentMap, ok := m["content"].(string); ok {
+	// 	content = contentMap
+	// }
 
 	parameters := map[string]string{}
 
@@ -43,7 +43,7 @@ func NewFromMap(m map[string]interface{}) BlockInterface {
 	block := NewBlock()
 	block.SetID(id)
 	block.SetType(blockType)
-	block.SetContent(content)
+	// block.SetContent(content)
 	block.SetParameters(parameters)
 	block.SetChildren(children)
 	return block

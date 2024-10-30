@@ -2,8 +2,8 @@ package ui
 
 type BlockInterface interface {
 	// Content
-	Content() string
-	SetContent(content string) BlockInterface
+	// Content() string
+	// SetContent(content string) BlockInterface
 
 	// Children
 	Children() []BlockInterface
