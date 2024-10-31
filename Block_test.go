@@ -35,20 +35,17 @@ func TestBlock_ToMap(t *testing.T) {
 			want: map[string]interface{}{
 				"id":         "1",
 				"type":       "block1",
-				"content":    "",
 				"parameters": map[string]string{"key": "value"},
 				"children": []map[string]interface{}{
 					{
 						"id":         "2",
 						"type":       "block2",
-						"content":    "",
 						"parameters": map[string]string{"key2": "value2"},
 						"children":   []map[string]interface{}{},
 					},
 					{
 						"id":         "3",
 						"type":       "block3",
-						"content":    "",
 						"parameters": map[string]string{"key3": "value3"},
 						"children":   []map[string]interface{}{},
 					},
