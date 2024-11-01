@@ -1,5 +1,7 @@
 package ui
 
+import "reflect"
+
 func NewFromMap(m map[string]interface{}) BlockInterface {
 	id := ""
 
@@ -30,13 +32,24 @@ func NewFromMap(m map[string]interface{}) BlockInterface {
 	children := []BlockInterface{}
 
 	if childrenAny, ok := m["children"]; ok {
-		childrenMap := childrenAny.([]map[string]interface{})
-		for _, c := range childrenMap {
-			child := NewFromMap(c)
-			if child == nil {
-				continue
+		typeOfChildren := reflect.TypeOf(childrenAny).Elem()
+
+		kind := typeOfChildren.Kind()
+
+		if kind == reflect.Interface {
+			childrenMap := childrenAny.([]BlockInterface)
+			children = childrenMap
+		}
+
+		if kind == reflect.Map {
+			childrenMap := childrenAny.([]map[string]interface{})
+			for _, c := range childrenMap {
+				child := NewFromMap(c)
+				if child == nil {
+					continue
+				}
+				children = append(children, child)
 			}
-			children = append(children, child)
 		}
 	}
 
