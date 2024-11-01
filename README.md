@@ -14,6 +14,10 @@ For commercial use, please use my [contact page](https://lesichkov.co.uk/contact
 
 This package allows to build user interfaces based on blocks.
 
+The block based user interface design approach breaks down complex user interfaces into smaller, self-contained blocks or modules.
+
+These blocks can be arranged and rearranged to create different layouts and user experiences.
+
 ## Benefits of Block-Based User Interfaces
 
 - **Faster Development:**
