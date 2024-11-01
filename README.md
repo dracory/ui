@@ -16,15 +16,15 @@ This package allows to build user interfaces based on blocks.
 
 ## Benefits of Block-Based User Interfaces
 
-- Faster Development:
+- **Faster Development:**
   Pre-built blocks streamline the UI creation process, reducing development time.
   Developers can focus on the logic and functionality rather than the nitty-gritty of UI design.
   
-- Reduced Technical Barrier:
+- **Reduced Technical Barrier:**
   No need for in-depth knowledge of complex UI frameworks or languages.
   Visual nature makes it accessible to a wider range of users, including non-programmers.
 
-- Consistency and Standardization:
+- **Consistency and Standardization:**
   Enforces consistency in UI design and layout across different parts of the application.
   Promotes reusability of UI components.
   
@@ -35,20 +35,20 @@ This package allows to build user interfaces based on blocks.
 ## Disadvantages of Block-Based User Interfaces
 Before starting on this path beware of the following:
 
-- Limited Customization:
+- **Limited Customization:**
   While blocks provide flexibility, they may not always meet specific design requirements.
   May not be suitable for highly customized or unique UIs.
   
-- Steeper Learning Curve:
+- **Steeper Learning Curve:**
   While easier than traditional UI development, there's still a learning curve to understand the block library and its capabilities.
   
-- Performance Overhead:
+- **Performance Overhead:**
   In some cases, block-based UIs might introduce performance overhead due to the underlying framework and interpretation of blocks.
   
-- Vendor Lock-in:
+- **Vendor Lock-in:**
   Reliance on a specific block-based framework can limit future options and migration possibilities.
 
-Overall, block-based user interfaces offer a promising approach to streamline UI development, especially for teams with diverse skill sets. However, their suitability depends on the specific project requirements and the trade-offs between speed, flexibility, and customization.
+> Overall, block-based user interfaces offer a promising approach to streamline UI development, especially for teams with diverse skill sets. However, their suitability depends on the specific project requirements and the trade-offs between speed, flexibility, and customization.
 
 ## Installation
 ```
