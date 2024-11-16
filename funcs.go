@@ -18,13 +18,15 @@ func mapToBlockMap(blockMap map[string]any) (map[string]any, error) {
 	parametersAny, ok := blockMap["parameters"]
 
 	if !ok {
-		return nil, errors.New("parameters not found")
+		//return nil, errors.New("parameters not found")
+		parametersAny = map[string]any{}
 	}
 
 	childrenAny, ok := blockMap["children"]
 
 	if !ok {
-		return nil, errors.New("children not found")
+		// return nil, errors.New("children not found")
+		childrenAny = []any{}
 	}
 
 	childrenArrayAny := childrenAny.([]any)
