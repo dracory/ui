@@ -6,17 +6,17 @@ import (
 )
 
 func TestBlock_ToMap(t *testing.T) {
-	block1 := NewBlock()
+	block1 := Block()
 	block1.SetID("1")
 	block1.SetType("block1")
 	block1.SetParameter("key", "value")
 
-	block2 := NewBlock()
+	block2 := Block()
 	block2.SetID("2")
 	block2.SetType("block2")
 	block2.SetParameter("key2", "value2")
 
-	block3 := NewBlock()
+	block3 := Block()
 	block3.SetID("3")
 	block3.SetType("block3")
 	block3.SetParameter("key3", "value3")
@@ -63,17 +63,17 @@ func TestBlock_ToMap(t *testing.T) {
 }
 
 func TestBlock_ToJson(t *testing.T) {
-	block1 := NewBlock()
+	block1 := Block()
 	block1.SetID("1")
 	block1.SetType("block1")
 	block1.SetParameter("key", "value")
 
-	block2 := NewBlock()
+	block2 := Block()
 	block2.SetID("2")
 	block2.SetType("block2")
 	block2.SetParameter("key2", "value2")
 
-	block3 := NewBlock()
+	block3 := Block()
 	block3.SetID("3")
 	block3.SetType("block3")
 	block3.SetParameter("key3", "value3")
@@ -81,7 +81,7 @@ func TestBlock_ToJson(t *testing.T) {
 	block1.AddChild(block2)
 	block1.AddChild(block3)
 
-	block4 := NewBlock()
+	block4 := Block()
 	block4.SetID("4")
 	block4.SetType("block4")
 
@@ -120,16 +120,17 @@ func TestBlock_ToJson(t *testing.T) {
 
 func TestBlock_BlockInterfaceToBlock(t *testing.T) {
 	type test struct {
-		Block
+		block
 	}
 
-	testF := func(block BlockInterface) string {
+	testF := func(b BlockInterface) string {
 		blockTest := &test{}
-		blockTest.Block = *(block.(*Block))
+		blockTest.block = *(b.(*block))
 		return blockTest.Type()
 	}
 
-	b := NewBlock().SetType("TEST")
+	b := Block()
+	b.SetType("TEST")
 
 	if testF(b) != "TEST" {
 		t.Error("Type must be TEST, found", testF(b))

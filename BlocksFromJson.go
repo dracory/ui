@@ -14,7 +14,7 @@ func BlocksFromJson(blocksJson string) ([]BlockInterface, error) {
 	blocks := []BlockInterface{}
 
 	for _, blockMap := range blocksMap {
-		block, err := mapStringAnyToBlock(blockMap)
+		block, err := mapToBlock(blockMap)
 
 		if err != nil {
 			return nil, err

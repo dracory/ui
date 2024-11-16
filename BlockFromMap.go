@@ -2,7 +2,8 @@ package ui
 
 import "reflect"
 
-func NewFromMap(m map[string]interface{}) BlockInterface {
+// BlockFromMap creates a block from a map
+func BlockFromMap(m map[string]interface{}) BlockInterface {
 	id := ""
 
 	if idMap, ok := m["id"].(string); ok {
@@ -14,12 +15,6 @@ func NewFromMap(m map[string]interface{}) BlockInterface {
 	if blockTypeMap, ok := m["type"].(string); ok {
 		blockType = blockTypeMap
 	}
-
-	// content := ""
-
-	// if contentMap, ok := m["content"].(string); ok {
-	// 	content = contentMap
-	// }
 
 	parameters := map[string]string{}
 
@@ -44,7 +39,7 @@ func NewFromMap(m map[string]interface{}) BlockInterface {
 		if kind == reflect.Map {
 			childrenMap := childrenAny.([]map[string]interface{})
 			for _, c := range childrenMap {
-				child := NewFromMap(c)
+				child := BlockFromMap(c)
 				if child == nil {
 					continue
 				}
@@ -53,10 +48,9 @@ func NewFromMap(m map[string]interface{}) BlockInterface {
 		}
 	}
 
-	block := NewBlock()
+	block := Block()
 	block.SetID(id)
 	block.SetType(blockType)
-	// block.SetContent(content)
 	block.SetParameters(parameters)
 	block.SetChildren(children)
 	return block

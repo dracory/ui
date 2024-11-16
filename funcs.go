@@ -2,7 +2,7 @@ package ui
 
 import "errors"
 
-func mapStringAnyToBlockMap(blockMap map[string]any) (map[string]any, error) {
+func mapToBlockMap(blockMap map[string]any) (map[string]any, error) {
 	idAny, ok := blockMap["id"]
 
 	if !ok {
@@ -32,7 +32,7 @@ func mapStringAnyToBlockMap(blockMap map[string]any) (map[string]any, error) {
 	childrenMap := []map[string]any{}
 	for _, childAny := range childrenArrayAny {
 		childAny := childAny.(map[string]any)
-		child, err := mapStringAnyToBlockMap(childAny)
+		child, err := mapToBlockMap(childAny)
 
 		if err != nil {
 			return nil, err
@@ -54,4 +54,14 @@ func mapStringAnyToBlockMap(blockMap map[string]any) (map[string]any, error) {
 	blockMap["children"] = childrenMap
 
 	return blockMap, nil
+}
+
+func mapToBlock(blockMap map[string]any) (BlockInterface, error) {
+	blockMap, err := mapToBlockMap(blockMap)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return BlockFromMap(blockMap), nil
 }

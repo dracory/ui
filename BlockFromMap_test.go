@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewFromMap(t *testing.T) {
+func TestBlockFromMap(t *testing.T) {
 	args := map[string]interface{}{
 		"id":         "1",
 		"type":       "block1",
@@ -32,25 +32,25 @@ func TestNewFromMap(t *testing.T) {
 	tests := []struct {
 		name string
 		args map[string]interface{}
-		want *Block
+		want *block
 	}{
 		{
 			name: "NewFromMap",
 			args: args,
-			want: &Block{
+			want: &block{
 				id:        "1",
 				blockType: "block1",
 				// content:    "",
 				parameters: map[string]string{"key": "value"},
 				children: []BlockInterface{
-					&Block{
+					&block{
 						id:        "2",
 						blockType: "block2",
 						// content:    "",
 						parameters: map[string]string{"key2": "value2"},
 						children:   []BlockInterface{},
 					},
-					&Block{
+					&block{
 						id:        "3",
 						blockType: "block3",
 						// content:    "",
@@ -63,7 +63,7 @@ func TestNewFromMap(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := NewFromMap(tt.args); !reflect.DeepEqual(got, tt.want) {
+			if got := BlockFromMap(tt.args); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("NewFromMap() = %v, want %v", got, tt.want)
 			}
 		})

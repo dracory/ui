@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewFromJSON(t *testing.T) {
+func TestBlockFromJSON(t *testing.T) {
 	type args struct {
 		blockJson string
 	}
@@ -13,7 +13,7 @@ func TestNewFromJSON(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		want    *Block
+		want    *block
 		wantErr bool
 	}{
 		{
@@ -21,7 +21,7 @@ func TestNewFromJSON(t *testing.T) {
 			args: args{
 				blockJson: `{"id":"1","type":"block1","content":"","parameters":{"key":"value"},"children":[]}`,
 			},
-			want: &Block{
+			want: &block{
 				id:        "1",
 				blockType: "block1",
 				// content:    "",
@@ -35,20 +35,20 @@ func TestNewFromJSON(t *testing.T) {
 			args: args{
 				blockJson: `{"id":"1","type":"block1","content":"","parameters":{"key":"value"},"children":[{"id":"2","type":"block2","content":"","parameters":{"key2":"value2"},"children":[]},{"id":"3","type":"block3","content":"","parameters":{"key3":"value3"},"children":[]}]}`,
 			},
-			want: &Block{
+			want: &block{
 				id:        "1",
 				blockType: "block1",
 				// content:    "",
 				parameters: map[string]string{"key": "value"},
 				children: []BlockInterface{
-					&Block{
+					&block{
 						id:        "2",
 						blockType: "block2",
 						// content:    "",
 						parameters: map[string]string{"key2": "value2"},
 						children:   []BlockInterface{},
 					},
-					&Block{
+					&block{
 						id:        "3",
 						blockType: "block3",
 						// content:    "",
@@ -62,7 +62,7 @@ func TestNewFromJSON(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := NewFromJson(tt.args.blockJson)
+			got, err := BlockFromJson(tt.args.blockJson)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("NewFromJSON() error = %v, wantErr %v", err, tt.wantErr)
 				return

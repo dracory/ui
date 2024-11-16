@@ -6,15 +6,9 @@ import (
 	"github.com/gouniverse/uid"
 )
 
-var _ BlockInterface = (*Block)(nil) // verify it extends the interface
+// == TYPE ====================================================================
 
-func NewBlock() BlockInterface {
-	block := &Block{}
-	block.SetID(uid.HumanUid())
-	return block
-}
-
-type Block struct {
+type block struct {
 	id        string
 	blockType string
 	// content    string
@@ -22,59 +16,69 @@ type Block struct {
 	parameters map[string]string
 }
 
-func (b *Block) AddChild(child BlockInterface) BlockInterface {
+// == CONSTUCTOR ==============================================================
+
+type BlockConfig struct {
+	ID         string
+	Type       string
+	Parameters map[string]string
+	Children   []BlockInterface
+}
+
+// Block returns a new block instance, and sets default ID
+func Block() BlockInterface {
+	block := &block{}
+
+	block.SetID(uid.HumanUid()) // default, can be changed by SetID if needed
+
+	return block
+}
+
+// == INTERFACE VERIFICATION ==================================================
+
+var _ BlockInterface = (*block)(nil) // verify it extends the interface
+
+// == INTERFACE IMPLEMENTATION ================================================
+
+func (b *block) AddChild(child BlockInterface) {
 	if b.children == nil {
 		b.children = []BlockInterface{}
 	}
 	b.children = append(b.children, child)
-	return b
 }
 
-func (b *Block) AddChildren(children []BlockInterface) BlockInterface {
+func (b *block) AddChildren(children []BlockInterface) {
 	if b.children == nil {
 		b.children = []BlockInterface{}
 	}
 	b.children = append(b.children, children...)
-	return b
 }
 
-func (b *Block) Children() []BlockInterface {
+func (b *block) Children() []BlockInterface {
 	return b.children
 }
 
-func (b *Block) SetChildren(children []BlockInterface) BlockInterface {
+func (b *block) SetChildren(children []BlockInterface) {
 	b.children = children
-	return b
 }
 
-// func (b *Block) Content() string {
-// 	return b.content
-// }
-
-// func (b *Block) SetContent(content string) BlockInterface {
-// 	b.content = content
-// 	return b
-// }
-
-func (b *Block) ID() string {
+func (b *block) ID() string {
 	return b.id
 }
 
-func (b *Block) SetID(id string) BlockInterface {
+func (b *block) SetID(id string) {
 	b.id = id
-	return b
 }
 
-func (b *Block) Parameters() map[string]string {
+func (b *block) Parameters() map[string]string {
 	return b.parameters
 }
 
-func (b *Block) SetParameters(parameters map[string]string) BlockInterface {
+func (b *block) SetParameters(parameters map[string]string) {
 	b.parameters = parameters
-	return b
 }
 
-func (b *Block) Parameter(key string) string {
+func (b *block) Parameter(key string) string {
 	if value, ok := b.parameters[key]; ok {
 		return value
 	}
@@ -82,24 +86,22 @@ func (b *Block) Parameter(key string) string {
 	return ""
 }
 
-func (b *Block) SetParameter(key string, value string) BlockInterface {
+func (b *block) SetParameter(key string, value string) {
 	if b.parameters == nil {
 		b.parameters = map[string]string{}
 	}
 	b.parameters[key] = value
-	return b
 }
 
-func (b *Block) Type() string {
+func (b *block) Type() string {
 	return b.blockType
 }
 
-func (b *Block) SetType(blockType string) BlockInterface {
+func (b *block) SetType(blockType string) {
 	b.blockType = blockType
-	return b
 }
 
-func (b *Block) ToMap() map[string]interface{} {
+func (b *block) ToMap() map[string]interface{} {
 	childrenMap := []map[string]interface{}{}
 
 	for _, child := range b.children {
@@ -107,15 +109,14 @@ func (b *Block) ToMap() map[string]interface{} {
 	}
 
 	return map[string]interface{}{
-		"id":   b.ID(),
-		"type": b.Type(),
-		// "content":    b.Content(),
+		"id":         b.ID(),
+		"type":       b.Type(),
 		"parameters": b.Parameters(),
 		"children":   childrenMap,
 	}
 }
 
-func (b *Block) ToJson() (string, error) {
+func (b *block) ToJson() (string, error) {
 	jsonObject := b.ToJsonObject()
 
 	json, err := json.Marshal(jsonObject)
@@ -127,7 +128,7 @@ func (b *Block) ToJson() (string, error) {
 	return string(json), nil
 }
 
-func (b *Block) ToJsonPretty() (string, error) {
+func (b *block) ToJsonPretty() (string, error) {
 	jsonObject := b.ToJsonObject()
 
 	json, err := json.MarshalIndent(jsonObject, "", "  ")
@@ -139,7 +140,7 @@ func (b *Block) ToJsonPretty() (string, error) {
 	return string(json), nil
 }
 
-func (b *Block) ToJsonObject() blockJsonObject {
+func (b *block) ToJsonObject() blockJsonObject {
 	parameters := b.Parameters()
 	if parameters == nil || len(parameters) < 1 {
 		parameters = make(map[string]string)
@@ -148,7 +149,7 @@ func (b *Block) ToJsonObject() blockJsonObject {
 	childrenJsonObject := make([]blockJsonObject, 0)
 
 	for _, child := range b.Children() {
-		childBlock := child.(*Block)
+		childBlock := child.(*block)
 		childrenJsonObject = append(childrenJsonObject, childBlock.ToJsonObject())
 	}
 

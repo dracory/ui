@@ -59,3 +59,59 @@ Before starting on this path beware of the following:
 ```
 go get -u github.com/gouniverse/ui
 ```
+
+## Usage
+
+```golang
+import (
+  "github.com/gouniverse/ui"
+)
+```
+
+## Example
+
+- **Creating a Document with a Page and Two Paragraphs:**
+```golang
+paragraph1 := Block()
+paragraph1.SetID("paragraph1")
+paragraph1.SetType("paragraph")
+paragraph1.SetParameter("content", "Hello, world!")
+
+paragraph2 := Block()
+paragraph2.SetID("paragraph2")
+paragraph2.SetType("paragraph")
+paragraph2.SetParameter("content", "Goodbye, world!")
+
+page := Block()
+page.SetID("page1")
+page.SetType("page")
+page.AddChild(paragraph1)
+page.AddChild(paragraph2)
+
+document := Block()
+document.SetID("document1")
+document.SetType("document")
+document.AddChild(page)
+```
+
+- **To JSON:**
+```golang
+documentAsJson := document.ToJson()
+print(documentAsJson)
+
+// or
+documentAsJson := ui.BlockToJson(document)
+print(documentAsJson)
+```
+
+- **To Map:**
+```golang
+documentAsMap := document.ToMap()
+print(documentAsMap)
+
+// or
+documentAsMap := ui.BlockToMap(document)
+print(documentAsMap)
+```
+
+
