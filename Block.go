@@ -2,28 +2,12 @@ package ui
 
 import (
 	"encoding/json"
+	"reflect"
 
 	"github.com/gouniverse/uid"
 )
 
-// == TYPE ====================================================================
-
-type block struct {
-	id        string
-	blockType string
-	// content    string
-	children   []BlockInterface
-	parameters map[string]string
-}
-
-// == CONSTUCTOR ==============================================================
-
-type BlockConfig struct {
-	ID         string
-	Type       string
-	Parameters map[string]string
-	Children   []BlockInterface
-}
+// == CONSTUCTORS ==============================================================
 
 // Block returns a new block instance, and sets default ID
 func Block() BlockInterface {
@@ -34,9 +18,87 @@ func Block() BlockInterface {
 	return block
 }
 
-// == INTERFACE VERIFICATION ==================================================
+func BlockFromJson(blockJson string) (BlockInterface, error) {
+	blockMap := map[string]any{}
 
-var _ BlockInterface = (*block)(nil) // verify it extends the interface
+	err := json.Unmarshal([]byte(blockJson), &blockMap)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return mapToBlock(blockMap)
+}
+
+// BlockFromMap creates a block from a map
+func BlockFromMap(m map[string]interface{}) BlockInterface {
+	id := ""
+
+	if idMap, ok := m["id"].(string); ok {
+		id = idMap
+	}
+
+	blockType := ""
+
+	if blockTypeMap, ok := m["type"].(string); ok {
+		blockType = blockTypeMap
+	}
+
+	parameters := map[string]string{}
+
+	if parametersMap, ok := m["parameters"].(map[string]string); ok {
+		for k, v := range parametersMap {
+			parameters[k] = v
+		}
+	}
+
+	children := []BlockInterface{}
+
+	if childrenAny, ok := m["children"]; ok {
+		typeOfChildren := reflect.TypeOf(childrenAny).Elem()
+
+		kind := typeOfChildren.Kind()
+
+		if kind == reflect.Interface {
+			childrenMap := childrenAny.([]BlockInterface)
+			children = childrenMap
+		}
+
+		if kind == reflect.Map {
+			childrenMap := childrenAny.([]map[string]interface{})
+			for _, c := range childrenMap {
+				child := BlockFromMap(c)
+				if child == nil {
+					continue
+				}
+				children = append(children, child)
+			}
+		}
+	}
+
+	block := Block()
+	block.SetID(id)
+	block.SetType(blockType)
+	block.SetParameters(parameters)
+	block.SetChildren(children)
+	return block
+}
+
+// == TYPE ====================================================================
+
+type block struct {
+	id         string
+	blockType  string
+	children   []BlockInterface
+	parameters map[string]string
+}
+
+type BlockConfig struct {
+	ID         string
+	Type       string
+	Parameters map[string]string
+	Children   []BlockInterface
+}
 
 // == INTERFACE IMPLEMENTATION ================================================
 
@@ -160,4 +222,12 @@ func (b *block) ToJsonObject() blockJsonObject {
 		Parameters: parameters,
 		Children:   childrenJsonObject,
 	}
+}
+
+type blockJsonObject struct {
+	ID         string            `json:"id"`
+	Type       string            `json:"type"`
+	Content    string            `json:"content"`
+	Parameters map[string]string `json:"parameters"`
+	Children   []blockJsonObject `json:"children"`
 }
