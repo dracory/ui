@@ -116,4 +116,128 @@ documentAsMap := ui.BlockToMap(document)
 print(documentAsMap)
 ```
 
+## Create a Block
+
+- Using the NewBlock function
+
+```golang
+block := ui.NewBlock()
+block.SetID("block1")
+block.SetType("type1")
+block.SetParameter("parameter1", "value1")
+block.SetParameter("parameter2", "value2")
+```
+
+- Using the NewBlockBuilder function
+
+```golang
+block := ui.NewBlockBuilder().
+    WithID("block1").
+    WithType("type1").
+    WithParameters(map[string]string{
+      "parameter1": "value1",
+      "parameter2": "value2",
+    }).
+    Build()
+```
+
+- Using the NewBlockFromMap function
+
+```golang
+block := ui.NewBlockFromMap(map[string]any{}{
+  "id": "block1",
+  "type": "type1",
+  "parameters": map[string]string{}{
+    "parameter1": "value1",
+    "parameter2": "value2",
+  },
+  "children": []BlockInterface{},
+})
+```
+
+- Using the NewBlockFromJson function
+
+```golang
+block, err := ui.NewBlockFromJson(`{
+  "id":"block1",
+  "type":"type1",
+  "parameters":{"parameter1":"value1","parameter2":"value2"},
+  "children":[]}`)
+if err != nil {
+  panic(err)
+}
+```
+
+## Marshal and Unmarshal to/from JSON
+
+- To JSON
+
+```golang
+documentAsJson := document.ToJson()
+```
+
+- From JSON
+
+```golang
+documentFromJson, err := ui.NewBlockFromJson(documentAsJson)
+
+if err != nil {
+  panic(err)
+}
+```
+
+## Convert to/fom Map
+
+- To Map
+
+```golang
+documentAsMap := document.ToMap()
+```
+
+- From Map
+
+```golang
+documentFromMap := ui.NewBlockFromMap(documentAsMap)
+```
+
+## Working with List of Blocks
+
+- Marshal Blocks to JSON
+
+```golang
+blocksJson := MarshalBlocksToJson(blocks)
+```
+
+- Unmarshal Blocks from JSON
+
+```golang
+blocks := UnmarshalBlocksFromJson(blocksJson)
+```
+
+- Convert Map to Blocks
+
+```golang
+blocks := ConvertMapToBlocks([]map[string]any{
+  {
+    "id": "block1",
+    "type": "type1",
+    "parameters": map[string]string{
+      "parameter1": "value1",
+      "parameter2": "value2",
+    },
+    "children": []BlockInterface{},
+  },
+})
+```
+
+- Convert Blocks to Slice of Maps
+
+```golang
+blockMaps := ConvertBlocksToMap(blocks)
+```
+
+
+
+
+
 

@@ -132,6 +132,11 @@ func (b *Block) SetID(id string) {
 	b.id = id
 }
 
+func (b *Block) HasParameter(key string) bool {
+	_, ok := b.parameters[key]
+	return ok
+}
+
 func (b *Block) Parameters() map[string]string {
 	return b.parameters
 }

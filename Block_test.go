@@ -3,6 +3,8 @@ package ui
 import (
 	"reflect"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func TestBlock_ToMap(t *testing.T) {
@@ -266,6 +268,36 @@ func TestBlockFromMap(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := NewBlockFromMap(tt.args); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("NewFromMap() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestBlockBuilder(t *testing.T) {
+	tests := []struct {
+		name string
+		want BlockInterface
+	}{
+		{
+			name: "BlockBuilder",
+			want: &Block{
+				id:         "1",
+				blockType:  "block1",
+				parameters: map[string]string{},
+				children:   []BlockInterface{},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := NewBlockBuilder().WithID("1").WithType("block1").Build()
+			if diff := cmp.Diff(got, tt.want, cmp.AllowUnexported(Block{})); diff != "" {
+				t.Log(diff)
+				t.Errorf("BlockBuilder() = %v, want %v", got, tt.want)
+			}
+
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("BlockBuilder() = %v, want %v", got, tt.want)
 			}
 		})
 	}
