@@ -9,16 +9,16 @@ import (
 
 // == CONSTUCTORS ==============================================================
 
-// Block returns a new block instance, and sets default ID
-func Block() BlockInterface {
-	block := &block{}
+// NewBlock returns a new block instance, and sets the default ID
+func NewBlock() BlockInterface {
+	block := &Block{}
 
 	block.SetID(uid.HumanUid()) // default, can be changed by SetID if needed
 
 	return block
 }
 
-func BlockFromJson(blockJson string) (BlockInterface, error) {
+func NewBlockFromJson(blockJson string) (BlockInterface, error) {
 	blockMap := map[string]any{}
 
 	err := json.Unmarshal([]byte(blockJson), &blockMap)
@@ -27,11 +27,11 @@ func BlockFromJson(blockJson string) (BlockInterface, error) {
 		return nil, err
 	}
 
-	return mapToBlock(blockMap)
+	return ConvertMapToBlock(blockMap)
 }
 
 // BlockFromMap creates a block from a map
-func BlockFromMap(m map[string]interface{}) BlockInterface {
+func NewBlockFromMap(m map[string]interface{}) BlockInterface {
 	id := ""
 
 	if idMap, ok := m["id"].(string); ok {
@@ -67,7 +67,7 @@ func BlockFromMap(m map[string]interface{}) BlockInterface {
 		if kind == reflect.Map {
 			childrenMap := childrenAny.([]map[string]interface{})
 			for _, c := range childrenMap {
-				child := BlockFromMap(c)
+				child := NewBlockFromMap(c)
 				if child == nil {
 					continue
 				}
@@ -76,7 +76,7 @@ func BlockFromMap(m map[string]interface{}) BlockInterface {
 		}
 	}
 
-	block := Block()
+	block := NewBlock()
 	block.SetID(id)
 	block.SetType(blockType)
 	block.SetParameters(parameters)
@@ -86,61 +86,61 @@ func BlockFromMap(m map[string]interface{}) BlockInterface {
 
 // == TYPE ====================================================================
 
-type block struct {
+type Block struct {
 	id         string
 	blockType  string
 	children   []BlockInterface
 	parameters map[string]string
 }
 
-type BlockConfig struct {
-	ID         string
-	Type       string
-	Parameters map[string]string
-	Children   []BlockInterface
-}
+// type BlockConfig struct {
+// 	ID         string
+// 	Type       string
+// 	Parameters map[string]string
+// 	Children   []BlockInterface
+// }
 
 // == INTERFACE IMPLEMENTATION ================================================
 
-func (b *block) AddChild(child BlockInterface) {
+func (b *Block) AddChild(child BlockInterface) {
 	if b.children == nil {
 		b.children = []BlockInterface{}
 	}
 	b.children = append(b.children, child)
 }
 
-func (b *block) AddChildren(children []BlockInterface) {
+func (b *Block) AddChildren(children []BlockInterface) {
 	if b.children == nil {
 		b.children = []BlockInterface{}
 	}
 	b.children = append(b.children, children...)
 }
 
-func (b *block) Children() []BlockInterface {
+func (b *Block) Children() []BlockInterface {
 	return b.children
 }
 
-func (b *block) SetChildren(children []BlockInterface) {
+func (b *Block) SetChildren(children []BlockInterface) {
 	b.children = children
 }
 
-func (b *block) ID() string {
+func (b *Block) ID() string {
 	return b.id
 }
 
-func (b *block) SetID(id string) {
+func (b *Block) SetID(id string) {
 	b.id = id
 }
 
-func (b *block) Parameters() map[string]string {
+func (b *Block) Parameters() map[string]string {
 	return b.parameters
 }
 
-func (b *block) SetParameters(parameters map[string]string) {
+func (b *Block) SetParameters(parameters map[string]string) {
 	b.parameters = parameters
 }
 
-func (b *block) Parameter(key string) string {
+func (b *Block) Parameter(key string) string {
 	if value, ok := b.parameters[key]; ok {
 		return value
 	}
@@ -148,22 +148,22 @@ func (b *block) Parameter(key string) string {
 	return ""
 }
 
-func (b *block) SetParameter(key string, value string) {
+func (b *Block) SetParameter(key, value string) {
 	if b.parameters == nil {
 		b.parameters = map[string]string{}
 	}
 	b.parameters[key] = value
 }
 
-func (b *block) Type() string {
+func (b *Block) Type() string {
 	return b.blockType
 }
 
-func (b *block) SetType(blockType string) {
+func (b *Block) SetType(blockType string) {
 	b.blockType = blockType
 }
 
-func (b *block) ToMap() map[string]interface{} {
+func (b *Block) ToMap() map[string]interface{} {
 	childrenMap := []map[string]interface{}{}
 
 	for _, child := range b.children {
@@ -178,31 +178,31 @@ func (b *block) ToMap() map[string]interface{} {
 	}
 }
 
-func (b *block) ToJson() (string, error) {
+func (b *Block) ToJson() (string, error) {
 	jsonObject := b.ToJsonObject()
 
-	json, err := json.Marshal(jsonObject)
+	jsonBytes, err := json.Marshal(jsonObject)
 
 	if err != nil {
 		return "", err
 	}
 
-	return string(json), nil
+	return string(jsonBytes), nil
 }
 
-func (b *block) ToJsonPretty() (string, error) {
+func (b *Block) ToJsonPretty() (string, error) {
 	jsonObject := b.ToJsonObject()
 
-	json, err := json.MarshalIndent(jsonObject, "", "  ")
+	jsonBytes, err := json.MarshalIndent(jsonObject, "", "  ")
 
 	if err != nil {
 		return "", err
 	}
 
-	return string(json), nil
+	return string(jsonBytes), nil
 }
 
-func (b *block) ToJsonObject() blockJsonObject {
+func (b *Block) ToJsonObject() blockJsonObject {
 	parameters := b.Parameters()
 	if parameters == nil || len(parameters) < 1 {
 		parameters = make(map[string]string)
@@ -211,7 +211,7 @@ func (b *block) ToJsonObject() blockJsonObject {
 	childrenJsonObject := make([]blockJsonObject, 0)
 
 	for _, child := range b.Children() {
-		childBlock := child.(*block)
+		childBlock := child.(*Block)
 		childrenJsonObject = append(childrenJsonObject, childBlock.ToJsonObject())
 	}
 

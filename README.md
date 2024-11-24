@@ -74,23 +74,23 @@ import (
 
 - **Creating a Document with a Page and Two Paragraphs:**
 ```golang
-paragraph1 := Block()
+paragraph1 := NewBlock()
 paragraph1.SetID("paragraph1")
 paragraph1.SetType("paragraph")
 paragraph1.SetParameter("content", "Hello, world!")
 
-paragraph2 := Block()
+paragraph2 := NewBlock()
 paragraph2.SetID("paragraph2")
 paragraph2.SetType("paragraph")
 paragraph2.SetParameter("content", "Goodbye, world!")
 
-page := Block()
+page := NewBlock()
 page.SetID("page1")
 page.SetType("page")
 page.AddChild(paragraph1)
 page.AddChild(paragraph2)
 
-document := Block()
+document := NewBlock()
 document.SetID("document1")
 document.SetType("document")
 document.AddChild(page)
