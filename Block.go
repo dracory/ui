@@ -31,7 +31,7 @@ func NewBlockFromJson(blockJson string) (BlockInterface, error) {
 }
 
 // BlockFromMap creates a block from a map
-func NewBlockFromMap(m map[string]interface{}) BlockInterface {
+func NewBlockFromMap(m map[string]any) BlockInterface {
 	id := ""
 
 	if idMap, ok := m["id"].(string); ok {
@@ -65,7 +65,7 @@ func NewBlockFromMap(m map[string]interface{}) BlockInterface {
 		}
 
 		if kind == reflect.Map {
-			childrenMap := childrenAny.([]map[string]interface{})
+			childrenMap := childrenAny.([]map[string]any)
 			for _, c := range childrenMap {
 				child := NewBlockFromMap(c)
 				if child == nil {
@@ -175,7 +175,7 @@ func (b *Block) ToMap() map[string]interface{} {
 		childrenMap = append(childrenMap, child.ToMap())
 	}
 
-	return map[string]interface{}{
+	return map[string]any{
 		"id":         b.ID(),
 		"type":       b.Type(),
 		"parameters": b.Parameters(),
@@ -209,7 +209,7 @@ func (b *Block) ToJsonPretty() (string, error) {
 
 func (b *Block) ToJsonObject() blockJsonObject {
 	parameters := b.Parameters()
-	if parameters == nil || len(parameters) < 1 {
+	if len(parameters) < 1 {
 		parameters = make(map[string]string)
 	}
 
@@ -221,9 +221,8 @@ func (b *Block) ToJsonObject() blockJsonObject {
 	}
 
 	return blockJsonObject{
-		ID:   b.ID(),
-		Type: b.Type(),
-		// Content:    b.Content(),
+		ID:         b.ID(),
+		Type:       b.Type(),
 		Parameters: parameters,
 		Children:   childrenJsonObject,
 	}
