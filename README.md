@@ -1,10 +1,10 @@
-# UI <a href="https://gitpod.io/#https://github.com/gouniverse/ui" style="float:right:"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open in Gitpod" loading="lazy"></a>
+# UI <a href="https://gitpod.io/#https://github.com/dracory/ui" style="float:right:"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open in Gitpod" loading="lazy"></a>
 
-<img src="https://opengraph.githubassets.com/5b92c81c05d64a82c3fb4ba95739403a2d38cbad61f260a0701b3366b3d10327/gouniverse/ui" />
+<img src="https://opengraph.githubassets.com/5b92c81c05d64a82c3fb4ba95739403a2d38cbad61f260a0701b3366b3d10327/dracory/ui" />
 
-[![Tests Status](https://github.com/gouniverse/ui/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/gouniverse/ui/actions/workflows/tests.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/gouniverse/ui)](https://goreportcard.com/report/github.com/gouniverse/ui)
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/gouniverse/ui)](https://pkg.go.dev/github.com/gouniverse/ui)
+[![Tests Status](https://github.com/dracory/ui/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/dracory/ui/actions/workflows/tests.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/dracory/ui)](https://goreportcard.com/report/github.com/dracory/ui)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/dracory/ui)](https://pkg.go.dev/github.com/dracory/ui)
 
 ## License
 
@@ -59,14 +59,14 @@ Before starting on this path beware of the following:
 
 ## Installation
 ```
-go get -u github.com/gouniverse/ui
+go get -u github.com/dracory/ui
 ```
 
 ## Usage
 
 ```golang
 import (
-  "github.com/gouniverse/ui"
+  "github.com/dracory/ui"
 )
 ```
 

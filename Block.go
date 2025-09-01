@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"reflect"
 
-	"github.com/gouniverse/uid"
+	"github.com/dracory/uid"
 )
 
 // == CONSTUCTORS ==============================================================
